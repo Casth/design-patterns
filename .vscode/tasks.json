@@ -2,7 +2,7 @@
     "tasks": [
         {
             "type": "cppbuild",
-            "label": "C/C++: g++.exe build active file",
+            "label": "C/C++: g++.exe Windows",
             "command": "C:\\msys64\\mingw64\\bin\\g++.exe",
             "args": [
                 "-fdiagnostics-color=always",
@@ -22,7 +22,7 @@
         },
         {
             "type": "cppbuild",
-            "label": "C/C++: clang++ Aktive Datei kompilieren",
+            "label": "C/C++: clang++ macOS",
             "command": "/usr/bin/clang++",
             "args": [
                 "-fcolor-diagnostics",

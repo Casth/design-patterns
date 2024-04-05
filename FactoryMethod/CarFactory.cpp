@@ -5,6 +5,11 @@ class Car {
   public:
     virtual ~Car() {};
     virtual std::string ShowLevel() const = 0;
+
+    std::string Horn() const {
+      std::string result = "Dii dii ~";
+      return result;
+    }
 };
 
 class LowEndCar : public Car {
@@ -27,11 +32,11 @@ class HighEndCar : public Car {
 class Factory {
   public:
     virtual ~Factory() {};
-    virtual Car* FactoryMethod() const = 0;
+    virtual Car* ProduceCar() const = 0;
 
-    std::string CarCheck() const {
-        Car* car = this->FactoryMethod();
-        std::string result = "Factory has produced " + car->ShowLevel();
+    std::string CheckCar() const {
+        Car* car = this->ProduceCar();
+        std::string result = "Factory has produced " + car->ShowLevel() + "  " + car->Horn();
         delete car;
         return result;
     }
@@ -39,14 +44,14 @@ class Factory {
 
 class LowEndFactory : public Factory {
   public:
-    Car* FactoryMethod() const override {
+    Car* ProduceCar() const override {
         return new LowEndCar();
     }
 };
 
 class HighEndFactory : public Factory {
   public:
-    Car* FactoryMethod() const override {
+    Car* ProduceCar() const override {
         return new HighEndCar();
     }
 };
@@ -55,7 +60,8 @@ class HighEndFactory : public Factory {
 
 void ClientCode(const Factory& factory) {
     std::cout << "Client: build a car with interface.\n"
-              << factory.CarCheck() << std::endl;
+              << factory.CheckCar() 
+              << std::endl;
 }
 
 
