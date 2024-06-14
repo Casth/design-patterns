@@ -63,8 +63,9 @@ class DriverAssistanceFeature {
 };
 
 /**
- * The ExtendedDriverAssistanceFeature is an extended abstraction / feature of the driver
- * assistance feature, in which the accuracy of all sensors (radars and cameras) are improved. 
+ * The ExtendedDriverAssistanceFeature is an extended abstraction, which corresponds to a 
+ * extended feature of the driver assistance feature, in which the accuracy of all sensors 
+ * (radars and cameras) are improved. 
 */
 class ExtendedDriverAssistanceFeature : public DriverAssistanceFeature {
   public:
@@ -76,6 +77,23 @@ class ExtendedDriverAssistanceFeature : public DriverAssistanceFeature {
                this->driver_assistance_system_->LongitudinalControlSubsystem() +
                this->driver_assistance_system_->LateralControlSubsystem() +
                "with higher accuracy on all radars and camaras.\n";
+    }
+};
+
+/**
+ * The HighwayDriverAssistanceFeature is an extended abstraction, which corresponds to a 
+ * simplified feature of the driver assistance feature, in which the lateral vehicle control
+ * is disabled, and the vehicle is controlled only in the longitudinal direction.
+*/
+class HighwayDriverAssistanceFeature : public DriverAssistanceFeature {
+  public:
+    HighwayDriverAssistanceFeature(DriverAssistanceSystem* driver_assistance_system) : DriverAssistanceFeature(driver_assistance_system) {
+    }
+
+    std::string AssistanceOperation() const override {
+        return "Highway driver assistance feature is realized with: \n" +
+               this->driver_assistance_system_->LongitudinalControlSubsystem() +
+               "Lateral control disabled.\n.";
     }
 };
 
@@ -106,6 +124,20 @@ int main() {
     
     da_system = new DriverAssistanceSystemSupplierA;
     da_feature = new ExtendedDriverAssistanceFeature(da_system);
+    ClientCode(*da_feature);
+    std::cout << std::endl;
+    delete da_system;
+    delete da_feature;
+    
+    da_system = new DriverAssistanceSystemSupplierA;
+    da_feature = new HighwayDriverAssistanceFeature(da_system);
+    ClientCode(*da_feature);
+    std::cout << std::endl;
+    delete da_system;
+    delete da_feature;
+    
+    da_system = new DriverAssistanceSystemSupplierB;
+    da_feature = new HighwayDriverAssistanceFeature(da_system);
     ClientCode(*da_feature);
     std::cout << std::endl;
     delete da_system;
