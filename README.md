@@ -3,9 +3,9 @@
 ## Creational Design Patterns
 Creational design patterns provide object creation mechanisms, which increase flexibility and reuse of existing code. Five patterns are explained: factory, abstract factory, builder, prototype, singleton.
 - ✅ **Factory method** reduces the coupling between the constructor and the product by defining interfaces for them. New constructor and product objects (following the interfaces) can be instantiated without affecting existing code.
-- ⌛ **Abstract factory** is similar to factory method, and extends the constructor's ability to constructing a family of various products via defined interfaces. The coupling between the constructor and the product is loose.
+- ✅ **Abstract factory** is similar to factory method, and extends the constructor's ability to constructing a family of various products via defined interfaces. The coupling between the constructor and the product is loose.
 - ✅ **Builder** separates the construction steps of a complex product from its representing (material, color, and further variants). Therefore, same construction process can be followed to created different variants of product.
-- 📌 **Prototype** allows to create instance of objects by calling the "clone" method defined in the interface.
+- ⌛️ **Prototype** allows to create instance of objects by calling the "clone" method defined in the interface.
 - 📌 **Singleton** allows only one instance of a class by defining the interface with a single point of access to the instance.
 
 ---
