@@ -6,7 +6,7 @@ Creational design patterns provide object creation mechanisms, which increase fl
 - ✅ **Abstract factory** is similar to factory method, and extends the constructor's ability to constructing a family of various products via defined interfaces. The coupling between the constructor and the product is loose.
 - ✅ **Builder** separates the construction steps of a complex product from its representing (material, color, and further variants). Therefore, same construction process can be followed to created different variants of product.
 - ✅ **Prototype** allows to create instance of objects by calling the "clone" method defined in the interface.
-- 📌 **Singleton** allows only one instance of a class by defining the interface with a single point of access to the instance.
+- ✅ **Singleton** allows only one instance of a class by defining the interface with a single point of access to the instance.
 
 ---
 
@@ -14,7 +14,7 @@ Creational design patterns provide object creation mechanisms, which increase fl
 Structural design patterns explain how to assemble objects and classes into larger structures, while keeping these structures flexible and efficient. Seven patterns are described: adapter, bridge, composite, decorator, facade, flyweight, proxy.
 - 📌 **Adapter** converts the interface of a class into another interface that the client expects.
 - ✅ **Bridge** extracts the abstraction (high-level functionality such as feature) from its implementation, and defines the abstraction and the implementation in a class and an interface respectively. As result, the abstraction and the implementation can vary independently.
-- 📌 **Composite** creates tree-like structure consisting of containers and leave using the same interface. This enables the uniformed (recursive) call of the elements in the tree independently from their classes (container or leaf).
+- ✅ **Composite** creates tree-like structure consisting of containers and leave using the same interface. This enables the uniformed (recursive) call of the elements in the tree independently from their classes (container or leaf).
 - 📌 **Decorator** adds additional functionality dynamically to an object by wrapping the object recursively.
 - **Facade** creates a unified interface to multiple interfaces of a subsystem, which makes the subsystem easier to use.
 - 📌 **Flyweight** reduces the memory usage by separating the intrinsic (value varies rarely) and extrinsic (value varies frequently) attributes. The flyweight class contains only intrinsic attributes. Only unique flyweight object are allowed to instantiate, which will then be extended with different extrinsic attributes.
