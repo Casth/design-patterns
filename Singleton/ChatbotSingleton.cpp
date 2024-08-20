@@ -1,11 +1,11 @@
 /**
  * Singleton Desgin Pattern
  * 
- * In this example, a chatbot platform is shown. The user can create new chatbot by
- * naming a category of topic, such as "math", "language", "drawing", etc. Only one 
- * chatbot instance is allowed, which can deal with all the topics. This means
+ * In this example, a chatbot platform is shown. The client can create new chatbot by
+ * giving choosing a name of the chatbot. But only one chatbot instance is allowed, 
+ * which will also deal with all chatbot requests after the instantiation. This means
  * That after a chatbot is created, further creation requests will return the already 
- * created bot to the user.
+ * created bot to the client.
 */
 
 #include <iostream>
@@ -50,20 +50,20 @@ Chatbot *Chatbot::GetChatBotInstance(const std::string& chatbot_name) {
 }
 
 /**
- * Thread which acquires the chatbot for math topics.
+ * Thread which acquires the chatbot A.
 */
-void ThreadChatbotMath() {
+void ThreadChatbotA() {
     std::this_thread::sleep_for(std::chrono::seconds(2));   // emulates slow initialization
-    Chatbot* chatbot = Chatbot::GetChatBotInstance("Math");
+    Chatbot* chatbot = Chatbot::GetChatBotInstance("Chatbot A");
     std::cout << chatbot->GetChatbotName() << "\n";
 }
 
 /**
- * Thread which acquires the chatbot for language topics.
+ * Thread which acquires the chatbot B.
 */
-void ThreadChatbotLanguage() {
+void ThreadChatbotB() {
     std::this_thread::sleep_for(std::chrono::seconds(1));   // emulates slow initialization
-    Chatbot* chatbot = Chatbot::GetChatBotInstance("Language");
+    Chatbot* chatbot = Chatbot::GetChatBotInstance("Chatbot B");
     std::cout << chatbot->GetChatbotName() << "\n";
 }
 
@@ -72,9 +72,9 @@ void ThreadChatbotLanguage() {
 */
 int main() {
     std::cout << "Creating chatbots:\n";
-    std::thread t1(ThreadChatbotMath);
-    std::thread t2(ThreadChatbotLanguage);
-    std::thread t3(ThreadChatbotMath);
+    std::thread t1(ThreadChatbotA);
+    std::thread t2(ThreadChatbotB);
+    std::thread t3(ThreadChatbotA);
     t1.join();
     t2.join();
     t3.join();
