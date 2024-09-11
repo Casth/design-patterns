@@ -12,6 +12,9 @@
 #include <vector>
 #include <unordered_map>
 
+/**
+ * IntrisicState structure contains the intrinsic states (color and texture)
+*/
 struct IntrinsicState {
     std::string color_;
     std::string texture_;
@@ -20,6 +23,9 @@ struct IntrinsicState {
         : color_(color), texture_(texture) {}
 };
 
+/**
+ * ExtrisicState structure contains the extrinsic states (position and size)
+*/
 struct ExtrinsicState {
     std::string position_;
     std::string size_;
@@ -28,6 +34,11 @@ struct ExtrinsicState {
         : position_(position), size_(size) {}
 };
 
+/**
+ * ModelFlyweight class for saving the intrinsic states. Its object stores the shared attributes (color and
+ * texture). Via its method "Operation", it can deal with the extrinsic states (individual attributes such as
+ * position and size)
+*/
 class ModelFlyweight {
   private:
     IntrinsicState *intrinsic_state_;
@@ -47,6 +58,11 @@ class ModelFlyweight {
     }
 };
 
+/**
+ * ModelFlyweightFactory class holds the list of Flyweight objects (model_flyweights_). While requested by the client 
+ * to return a Flyweight object, it checks whether such Flyweight object is already exists. If so the existing Flyweight
+ * object is returned. Otherwise, a new Flyweight object is created and returned.
+*/
 class ModelFlyweightFactory {
   private:
     std::unordered_map<std::string, ModelFlyweight> model_flyweights_;
@@ -72,9 +88,36 @@ class ModelFlyweightFactory {
     }
     void ListFlyweights() const {
         size_t count = this->model_flyweights_.size();
-        std::cout << "FlyweightFactory: " << count << " flyweights.\n";
+        std::cout << "\nFlyweightFactory: " << count << " flyweights.\n";
         for (std::pair<std::string, ModelFlyweight> pair : this->model_flyweights_) {
             std::cout << pair.first << "\n";
         }
     }
 };
+
+/**
+ * AddModelToWorkspace is used by client to add new model objects into the workspace. This function make advantage of the Flyweight by separating the 
+ * intrinsic and extrinsic states from each other, and trys to re-use the existing Flyweight objects in the workspace.
+*/
+void AddModelToWorkspace(ModelFlyweightFactory &flyweight_factory, const std::string &color, const std::string texture, const std::string position, const std::string size) {
+    std::cout << "\nAdding a model to workspace.\n";
+    IntrinsicState intrinsic_state = {color, texture};
+    ExtrinsicState extrinsic_state = {position, size};
+    const ModelFlyweight &model_flyweight = flyweight_factory.GetFlyweight(intrinsic_state);
+    model_flyweight.Operation(extrinsic_state);
+}
+
+/**
+ * Client code to create the Flyweight factory with an initial Flyweight objects. After that, model objects with both intrinsic and extrinsic 
+ * attributes are created.
+*/
+int main() {
+    ModelFlyweightFactory *flyweight_factory = new ModelFlyweightFactory({{"black", "plain"}, {"black", "dotted"}, {"white", "dashed"}, {"grey", "plain"}});
+    flyweight_factory->ListFlyweights();
+
+    AddModelToWorkspace(*flyweight_factory, "black", "plain", "x=100, y=10", "big");
+    AddModelToWorkspace(*flyweight_factory, "grey", "dotted", "x=10, y=20", "middle");
+    flyweight_factory->ListFlyweights();
+
+    delete flyweight_factory;
+}
